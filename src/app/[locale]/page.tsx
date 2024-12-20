@@ -1,11 +1,7 @@
 import { Locale } from '@/i18n/routing';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
-const Home = async ({
-  params,
-}: {
-  params: Promise<{ locale: Locale }>;
-}) => {
+const Home = async ({ params }: { params: Promise<{ locale: Locale }> }) => {
   // Enable static rendering
   const { locale } = await params;
   // Set the locale

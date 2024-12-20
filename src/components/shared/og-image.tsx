@@ -5,16 +5,12 @@ interface OgImageProps {
   subtitle: string;
 }
 
-export async function generateOgImage({
-  title,
-  subtitle,
-}: OgImageProps) {
+export async function generateOgImage({ title, subtitle }: OgImageProps) {
   return new ImageResponse(
     (
       <div
         style={{
-          background:
-            'linear-gradient(to bottom right, #000000, #171717)',
+          background: 'linear-gradient(to bottom right, #000000, #171717)',
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -43,9 +39,7 @@ export async function generateOgImage({
               borderRadius: '50%',
             }}
           />
-          <span style={{ color: '#ffffff', fontSize: '24px' }}>
-            Next.js 15
-          </span>
+          <span style={{ color: '#ffffff', fontSize: '24px' }}>Next.js 15</span>
         </div>
 
         {/* Main Content */}
@@ -61,8 +55,7 @@ export async function generateOgImage({
             style={{
               fontSize: '64px',
               fontWeight: 'bold',
-              background:
-                'linear-gradient(to right, #ffffff, #cccccc)',
+              background: 'linear-gradient(to right, #ffffff, #cccccc)',
               backgroundClip: 'text',
               color: 'transparent',
               textAlign: 'center',

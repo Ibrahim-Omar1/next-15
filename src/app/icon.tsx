@@ -31,8 +31,7 @@ export default function Icon({ id }: { id: string }) {
       <div
         style={{
           fontSize: parseInt(id) * 0.75, // Scale font size with icon size
-          background:
-            'linear-gradient(to bottom right, #000000, #171717)',
+          background: 'linear-gradient(to bottom right, #000000, #171717)',
           width: '100%',
           height: '100%',
           display: 'flex',
