@@ -1,21 +1,87 @@
 import { createNavigation } from 'next-intl/navigation';
 import { defineRouting } from 'next-intl/routing';
 
-export const routing = defineRouting({
-  // A list of all locales that are supported
-  locales: ['en', 'ar'],
+/**
+ * Represents the supported locales in the application.
+ *
+ * @constant {'en' | 'ar'} Locale
+ */
+export type Locale = 'en' | 'ar';
 
-  // Used when no locale matches
-  defaultLocale: 'en',
+/**
+ * Constant array of supported locale codes. Used for:
+ *
+ * - Route configuration
+ * - Language selection
+ * - Message loading
+ * - URL path validation
+ *
+ * @constant {readonly ('en' | 'ar')[]}
+ */
+export const locales = ['en', 'ar'] as const;
+
+/**
+ * The fallback locale used when:
+ *
+ * - No locale is specified in the URL
+ * - An invalid locale is provided
+ * - Message loading fails for the requested locale
+ *
+ * @constant {'en'}
+ */
+export const defaultLocale = 'en';
+
+/**
+ * URL locale prefix strategy. 'always' ensures every URL includes the locale prefix:
+ *
+ * - /en/about
+ * - /ar/profile
+ *
+ * This helps with:
+ *
+ * - SEO optimization
+ * - Consistent URL structure
+ * - Proper language detection
+ *
+ * @constant {'always'}
+ */
+export const localePrefix = 'always';
+
+/**
+ * Core routing configuration for next-intl. Defines the internationalization behavior for the
+ * application.
+ *
+ * @constant {object} routing
+ * @see {@link https://next-intl-docs.vercel.app/docs/getting-started/app-router/with-i18n-routing#i18n-routing Routing Setup}
+ */
+export const routing = defineRouting({
+  locales,
+  defaultLocale,
+  localePrefix,
 });
 
-// Lightweight wrappers around Next.js' navigation APIs
-// that will consider the routing configuration
+/**
+ * Navigation utilities for handling internationalized routing.
+ *
+ * @see {@link https://next-intl-docs.vercel.app/docs/routing/navigation Navigation API Documentation}
+ */
 export const {
   Link,
   redirect,
-  permanentRedirect,
   usePathname,
   useRouter,
   getPathname,
+  permanentRedirect,
 } = createNavigation(routing);
+
+/**
+ * Type guard that validates if a string is a supported locale. Used for runtime locale validation
+ * throughout the application.
+ *
+ * @function isValidLocale
+ * @param {string} locale - String to validate as locale
+ * @returns {boolean} True if string is a valid locale
+ */
+export function isValidLocale(locale: string): locale is Locale {
+  return locales.includes(locale as Locale);
+}
