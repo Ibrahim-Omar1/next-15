@@ -73,15 +73,3 @@ export const {
   getPathname,
   permanentRedirect,
 } = createNavigation(routing);
-
-/**
- * Type guard that validates if a string is a supported locale. Used for runtime locale validation
- * throughout the application.
- *
- * @function isValidLocale
- * @param {string} locale - String to validate as locale
- * @returns {boolean} True if string is a valid locale
- */
-export function isValidLocale(locale: string): locale is Locale {
-  return locales.includes(locale as Locale);
-}
