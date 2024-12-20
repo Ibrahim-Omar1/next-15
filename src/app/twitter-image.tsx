@@ -1,6 +1,6 @@
 import { generateOgImage } from '@/components/shared/og-image';
 
-export const runtime = 'edge';
+// export const runtime = 'edge';
 export const alt = 'Twitter Image';
 export const size = {
   width: 1200,
