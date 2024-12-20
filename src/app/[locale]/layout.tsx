@@ -1,4 +1,5 @@
 import { Locale, routing } from '@/i18n/routing';
+import { Metadata, Viewport } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import {
   getMessages,
@@ -19,14 +20,37 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
+export function generateViewport(): Viewport {
+  return {
+    themeColor: [
+      { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+      { media: '(prefers-color-scheme: dark)', color: '#000000' },
+    ],
+    colorScheme: 'light dark',
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 2,
+    userScalable: true,
+  };
+}
+
 export const generateMetadata = async ({
   params,
 }: {
   params: Promise<{ locale: string }>;
-}) => {
+}): Promise<Metadata> => {
   const { locale } = await params;
-  // const messages = await getMessages();
   const t = await getTranslations({ locale });
+
+  // Create languages object from locales
+  const languages = routing.locales.reduce(
+    (acc, locale) => ({
+      ...acc,
+      [locale]: `/${locale}`,
+    }),
+    {}
+  );
+
   return {
     title: {
       template: t('a-yqgncs_F6ga-Q3AISvK'),
@@ -34,8 +58,33 @@ export const generateMetadata = async ({
       absolute: t('DnzKJl0wUtheMwdBXZ0WI'),
     },
     description: t('DnzKJl0wUtheMwdBXZ0WI'),
+    alternates: {
+      canonical: `/${locale}`,
+      languages,
+    },
+    authors: {
+      name: 'Ibrahim Omar',
+      url: 'https://www.linkedin.com/in/ibrahim-omar-883156253/',
+    },
+    category: 'Technology',
+    creator: 'Ibrahim Omar',
+    publisher: 'Ibrahim Omar',
+    robots: 'index, follow',
+    classification: 'Technology',
+    keywords: [
+      'Next.js',
+      'React',
+      'TypeScript',
+      'Server Components',
+      'App Router',
+    ],
   };
 };
+
+// Generate static params for the locale
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 export default async function RootLayout({
   children,
